@@ -1,25 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+// styles & components
+import "./App.css";
+import CreateUserPage from "./pages/CreateUser";
+import Login from "./pages/Login";
+import UserProfilePage from "./pages/UserProfile";
+import Header from "./components/Header";
+
+ const firebaseConfig = {
+  apiKey: "AIzaSyD8je9X8dWedy4ltE3-ShpmWK40APKambk",
+  authDomain: "exercise-six-dynweb.firebaseapp.com",
+  projectId: "exercise-six-dynweb",
+  storageBucket: "exercise-six-dynweb.appspot.com",
+  messagingSenderId: "389089056078",
+  appId: "1:389089056078:web:b5120d54b4be9eae38ba1f"
+};
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <UserProfilePage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/create",
+    element: <CreateUserPage />,
+  },
+]);
 
 function App() {
+const [appInitialized, setappInitialized] = useState (false);
+const [isLoading, setIsLoading] = useState (true);
+const [isLoadingIn, setIsLoadingIn] = useState (false);
+const [userInformation, setUserInformation] = useState ({});
+
+
+  useEffect(()=> {
+    initializeApp(firebaseConfig);
+    setappInitialized(true);
+  },[]);
+  useEffect(() => {
+    if(appInitialized) {
+      const auth = getAuth();
+      onAuthStateChanged(auth,(user)=>{
+        if (user){
+          setUserInformation(user);
+          setIsLoadingIn(true);
+        }else{
+          setUserInformation({});
+          isLoadingIn(false);
+        }
+        setIsLoading(false);
+      });
+    }
+  },[appInitialized]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+    <RouterProvider router={router} />
     </div>
   );
 }
+
 
 export default App;
