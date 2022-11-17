@@ -1,7 +1,19 @@
 import React from "react";
+import {getAuth, signOut} from "firebase/auth";
 
 
-function Header(){
+function Header({setIsLoggedIn, setUserInformation}){
+    function logout(){
+        const auth= getAuth();
+        signOut(auth)
+            .then(() => {
+                setUserInformation({});
+                setIsLoggedIn(false);
+            })
+            .catch((error) => {
+                console.warn(error);
+            });
+    }
     return (
     <nav className="header">
         <a href ="/">

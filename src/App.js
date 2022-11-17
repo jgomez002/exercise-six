@@ -21,7 +21,7 @@ import Header from "./components/Header";
 function App() {
 const [appInitialized, setappInitialized] = useState (false);
 const [isLoading, setIsLoading] = useState (true);
-const [isLoadingIn, setIsLoadingIn] = useState (false);
+const [isLoggedIn, setIsLoggedIn] = useState (false);
 const [userInformation, setUserInformation] = useState ({});
 
 
@@ -35,10 +35,10 @@ const [userInformation, setUserInformation] = useState ({});
       onAuthStateChanged(auth,(user)=>{
         if (user){
           setUserInformation(user);
-          setIsLoadingIn(true);
+          isLoggedIn(true);
         }else{
           setUserInformation({});
-          isLoadingIn(false);
+          isLoggedIn(false);
         }
         setIsLoading(false);
       });
@@ -48,7 +48,10 @@ const [userInformation, setUserInformation] = useState ({});
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <UserProfilePage />,
+      element: <UserProfilePage
+      setIsLoading={isLoading}
+      setIsLoggedIn={isLoggedIn}
+      setUserInformation={userInformation}/>,
     },
     {
       path: "/login",
@@ -57,8 +60,8 @@ const [userInformation, setUserInformation] = useState ({});
     {
       path: "/create",
       element: <CreateUserPage 
-        setIsLoggedIn={isLoadingIn}
-        setUserInformation={setUserInformation}/>,
+        setIsLoggedIn={isLoggedIn}
+        setUserInformation={userInformation}/>,
     },
   ]);
 

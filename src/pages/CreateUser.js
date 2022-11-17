@@ -1,8 +1,15 @@
 import { confirmPasswordReset, createUserWithEmailAndPassword } from "firebase/auth";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, useEffect} from "react";
+import {useNavigate} from "react-router"
 import CreateUserForm from "../components/CreateUserForm";
 
 function CreateUserPage({setIsLoggedIn, setUserInformation, getAuth}){
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (setIsLoggedIn) navigate("/");
+    },[setIsLoggedIn]);
+
     const [errors, setErrors] = useState();
     const signUpUser = useCallback(
         (e) => {
