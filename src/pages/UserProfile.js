@@ -2,7 +2,7 @@ import React from "react";
 
 function UserProfilePage(){
     return(
-    <div>
+    <div className="PageWrapper">
         <h1>User Profile</h1>
     </div>
     )

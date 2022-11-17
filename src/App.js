@@ -18,21 +18,6 @@ import Header from "./components/Header";
   appId: "1:389089056078:web:b5120d54b4be9eae38ba1f"
 };
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <UserProfilePage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/create",
-    element: <CreateUserPage />,
-  },
-]);
-
 function App() {
 const [appInitialized, setappInitialized] = useState (false);
 const [isLoading, setIsLoading] = useState (true);
@@ -59,6 +44,23 @@ const [userInformation, setUserInformation] = useState ({});
       });
     }
   },[appInitialized]);
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <UserProfilePage />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/create",
+      element: <CreateUserPage 
+        setIsLoggedIn={isLoadingIn}
+        setUserInformation={setUserInformation}/>,
+    },
+  ]);
 
   return (
     <div className="App">

@@ -3,8 +3,8 @@ import React from "react";
 
 function LoginForm(){
     return (
+    <div className="PageWrapper">
     <form className="formElement">
-        <div className="PageWrapper">
         <label htmlFor="userName">User Name </label>
         <input type="text" name="userName"/>
 
@@ -12,8 +12,8 @@ function LoginForm(){
         <input type="password" name="Userpassword"/>
 
         <button type="submit">Submit</button>
-    </div>
     </form>
+    </div>
     );
 }
 
