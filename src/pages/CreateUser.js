@@ -9,7 +9,7 @@ function CreateUserPage({setIsLoggedIn, isLoggedIn, setUserInformation}){
 
     useEffect(() => {
         if (isLoggedIn) navigate('/');
-    },[isLoggedIn]);
+    },[isLoggedIn, navigate]);
 
     const [errors, setErrors] = useState();
     const signUpUser = useCallback(
